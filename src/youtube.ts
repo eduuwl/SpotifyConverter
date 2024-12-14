@@ -1,4 +1,4 @@
-const { getPlaylist } = require('youtube-playlist');
+import YouTubePlaylist from 'youtube-playlist';
 
 /**
  * Obtém os títulos de vídeos de uma playlist do YouTube.
@@ -8,8 +8,15 @@ const { getPlaylist } = require('youtube-playlist');
 
 export async function getYouTubePlaylistTitles(playlistUrl: string): Promise<string[]> {
   try {
-    const playlist = await getPlaylist(playlistUrl, "name");
-    return playlist.items.map((item: any) => item.name);
+    const playlist = await YouTubePlaylist.getPlaylist(playlistUrl, { limit: 50 });
+    
+    if (!Array.isArray(playlist)) {
+      throw new Error("A playlist retornada não é um array válido.");
+    }
+    
+    console.log("Playlist retornada:", playlist);
+
+    return playlist.map((item: { title: string; id: string }) => item.title);
   } catch (error: any) {
     console.error("Erro ao obter a playlist do YouTube:", error.message);
     throw error;

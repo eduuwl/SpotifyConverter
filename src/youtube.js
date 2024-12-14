@@ -19,8 +19,12 @@ const youtube_playlist_1 = require("youtube-playlist");
 function getYouTubePlaylistTitles(playlistUrl) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const playlist = yield (0, youtube_playlist_1.getPlaylist)(playlistUrl, "name");
-            return playlist.items.map((item) => item.name);
+            const playlist = yield (0, youtube_playlist_1.getPlaylist)(playlistUrl, { limit: 50 });
+            if (!Array.isArray(playlist)) {
+                throw new Error("A playlist retornada não é um array válido.");
+            }
+            console.log("Playlist retornada:", playlist);
+            return playlist.map((item) => item.title);
         }
         catch (error) {
             console.error("Erro ao obter a playlist do YouTube:", error.message);

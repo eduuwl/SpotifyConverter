@@ -1,7 +1,6 @@
 import * as readline from "readline";
 import { getYouTubePlaylistTitles } from "./src/youtube";
 import { authenticateSpotify, searchAndAddTracksToPlaylist } from "./src/spotify";
-import { getPlaylist } from "youtube-playlist";
 import dotenv from "dotenv";
 
 dotenv.config();
