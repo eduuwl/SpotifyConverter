@@ -9,16 +9,43 @@ const spotifyApi = new SpotifyWebApi({
   redirectUri: process.env.SEU_REDIRECT_URI,
 });
 
-export async function authenticateSpotify(): Promise<void> {
+export async function authenticateSpotify(authCode: string): Promise<void> {
   try {
-    const data = await spotifyApi.clientCredentialsGrant();
+    const data = await spotifyApi.authorizationCodeGrant(authCode);
+    
     spotifyApi.setAccessToken(data.body.access_token);
-    console.log("Spotify autenticado com sucesso!");
+    spotifyApi.setRefreshToken(data.body.refresh_token);
+
+    console.log("✅ Spotify autenticado com sucesso!");
   } catch (error: any) {
-    console.error("Erro ao autenticar no Spotify:", error.message);
+    console.error("❌ Erro ao autenticar no Spotify:", error.message);
     throw error;
   }
 }
+
+export async function refreshSpotifyToken() {
+  try {
+    const data = await spotifyApi.refreshAccessToken();
+    spotifyApi.setAccessToken(data.body.access_token);
+    console.log("🔄 Token do Spotify atualizado!");
+  } catch (error: any) {
+    console.error("❌ Erro ao atualizar token:", error.message);
+  }
+}
+
+setInterval(refreshSpotifyToken, 1000 * 60 * 50); 
+
+export function getSpotifyAuthUrl(): string {
+  const scopes = [
+    "playlist-modify-public",
+    "playlist-modify-private",
+    "user-read-private",
+    "user-read-email",
+  ];
+
+  return spotifyApi.createAuthorizeURL(scopes, "state123");
+}
+
 
 /**
  * Busca músicas no Spotify e adiciona à playlist.

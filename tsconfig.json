@@ -1,11 +1,11 @@
 {
   "compilerOptions": {
-    "typeRoots": ["./node_modules/@types"],
-    "strict": true,
+    "typeRoots": ["./node_modules/@types", "./src/@types"],
+    "baseUrl": "./",
+    "paths": {
+      "*": ["./src/@types/*"]
+    },
     "esModuleInterop": true,
-    "moduleResolution": "node",
-    "module": "commonjs",
-    "target": "es6"
-  },
-  "include": ["src/**/*", "types/**/*"]
+    "resolveJsonModule": true
+  }
 }

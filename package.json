@@ -17,6 +17,8 @@
     "googleapis": "^144.0.0",
     "spotify-web-api-node": "^5.0.2",
     "youtube-playlist": "^1.0.4",
+    "youtubei": "^1.6.7",
+    "yt-playlist-scraper": "^1.2.1",
     "ytdl-core": "^4.11.5"
   },
   "devDependencies": {
