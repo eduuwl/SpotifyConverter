@@ -4,9 +4,9 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 const spotifyApi = new SpotifyWebApi({
-  clientId: process.env.SEU_CLIENT_ID,
-  clientSecret: process.env.SEU_CLIENT_SECRET,
-  redirectUri: process.env.SEU_REDIRECT_URI,
+  clientId: process.env.SPOTIFY_CLIENT_ID,
+  clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
+  redirectUri: process.env.SPOTIFY_REDIRECT_URI,
 });
 
 export async function authenticateSpotify(authCode: string): Promise<void> {
